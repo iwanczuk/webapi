@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+  apache:
+    build:
+      context: ./apache
+      args:
+        - APACHE_DBG
+    environment:
+      - APACHE_SERVER_NAME
+    networks:
+      - default
+    ports:
+      - 0.0.0.0:80:80
+    volumes:
+      - ../src:/var/www
+
+  mysql:
+    build:
+      context: ./mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_ROOT_HOST
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+    networks:
+      - default
+    ports:
+      - 127.0.0.1:3306:3306
+    volumes:
+      - ../data/mysql:/var/lib/mysql
